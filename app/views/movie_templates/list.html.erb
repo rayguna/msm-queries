@@ -19,6 +19,12 @@
     </td>
     <td><%=a_movie.title%></td>
     <td><%=a_movie.year%></td>
+    <td>
+      <%matching_records = Director.where({:id => a_movie.director_id})%>
+      <%the_director = matching_records.at(0)%>
+
+      <%=the_director.name%>
+    </td>
     <td><a href="/movies/<%=a_movie.id%>">Show Details</a></td>
   </tr>
 <%end%> 
