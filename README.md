@@ -232,3 +232,5 @@ end
 27 min
 
 9. Next, we need to show the filmography for the director on the details.html.erb page.
+
+40 min - begin discussions on movie details page
