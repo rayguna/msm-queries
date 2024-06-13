@@ -8,7 +8,7 @@ class ActorsController < ApplicationController
 
     matching_records = Actor.where({:id => the_id})
 
-    @the_director = matching_records.at(0)
+    @the_actor = matching_records.at(0)
 
     render({:template => "actor_templates/details"})
   end

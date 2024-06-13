@@ -3,7 +3,14 @@ Rails.application.routes.draw do
 
   #directors  
   get("/directors", { :controller => "directors", :action => "index" })
+
+  #oldest and youngest directors - the routes must be higher than the wildcards!
+  get("/directors/youngest", { :controller => "directors", :action => "youngest"})
+  get("/directors/eldest", { :controller => "directors", :action => "eldest" })
+
   get("/directors/:the_id", { :controller => "directors", :action => "show" })
+
+
 
   #movies
   get("/movies", { :controller => "movies", :action => "index"})
