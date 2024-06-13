@@ -146,5 +146,89 @@ end
 ```
 # app/views/director_templates/list.html.erb
 
+<h1>List of directors</h1>
+
+<table border = "1">
+<tr>
+  <th> ID </th>
+  <th> Image </th>
+  <th> Name </th>
+  <th> Dob </th>
+  <th></th>
+</tr>
+
+<% Director.all.each do |a_director| %>
+  <tr>
+    <td><%=a_director.id%></td>
+    <td>
+      <img src="<%=a_director.image%>" width = 100>
+    </td>
+    <td><%=a_director.name%></td>
+    <td><<%=a_director.dob%>/td>
+    <td><a href="/directors/<%=a_director.id%>">Show Details</a></td>
+  </tr>
+<%end%> 
+
+
+
+</table>
+```
+
+5. Include a dynamic page that has a route ending with :the id. The routed page will be the page called show.html.erb, but the contents of the page will be dynamic depending on the dynamic value of :the_id.
 
 ```
+#config/routes.rb
+
+Rails.application.routes.draw do
+  get("/", { :controller => "misc", :action => "homepage" })
+
+  get("/directors", { :controller => "directors", :action => "index" })
+
+  get("/directors/:the_id", { :controller => "directors", :action => "show" })
+end
+```
+
+6. Accordingly, create a show.html.erb file called show.html.erb.
+
+To test to make sure that this page can read the dynamic route, add within the page: <%=params%>.
+
+Here is what you will see:
+```
+howdy {"controller"=>"directors", "action"=>"show", "the_id"=>"1"}
+```
+21 min.
+
+7. Perform all tasks within the file app/controllers/directors_controller.rb and within the method show to do database filtering and pass the output using @the_director, as follows.
+
+```
+class DirectorsController < ApplicationController
+  def index
+    render({:template => "director_templates/list"})
+  end
+
+  def show
+    the_id = params.fetch("the_id")
+
+    matching_records = Director.where({:id => the_id})
+
+    @the_director = matching_records.at(0)
+
+    render({:template => "director_templates/details"})
+  end
+end
+```
+
+8. You can accordingly call the vaious methods of the @the_director variable on the html page, as follows.
+
+```
+<h1>Director #<%=@the_director.id%> details</h1>
+
+<a href="/directors/">Go back</a>
+
+<hr>
+
+<%=@the_director.dob%>
+```
+27 min
+
+9. Next, we need to show the filmography for the director on the details.html.erb page.
